@@ -3,21 +3,29 @@ package com.iam;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
+import jakarta.ws.rs.POST;
+
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @WebService(serviceName = "ScolariteService")
-public class ScolariteService   {
+public class ScolariteService {
 
-    
     MySqlConction db = new MySqlConction();
-    
+
+    @WebMethod(operationName = "options")
+    public void options() {
+        // This method is empty. It's just used to handle OPTIONS requests.
+    }
+
     @WebMethod(operationName = "addEtudiant")
-    public boolean addEtudiant(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "dateNaissance") String dateNaissance, @WebParam(name = "filiere") String filiere) {
-        
+    @POST
+    
+    public boolean addEtudiant(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom,
+            @WebParam(name = "dateNaissance") String dateNaissance, @WebParam(name = "filiere") String filiere) {
+
         try {
             db.connect();
             System.out.println(db.getDbName());
@@ -33,11 +41,11 @@ public class ScolariteService   {
 
     @WebMethod(operationName = "getEtudiant")
     public Student getEtudiant(@WebParam(name = "id") int id) {
-        
+
         try {
             db.connect();
             ResultSet data = db.getById(id);
-           
+
             Student student = new Student();
             while (data.next()) {
                 student.setId(data.getInt("id"));
@@ -48,7 +56,6 @@ public class ScolariteService   {
             }
             db.disconnect();
             return student;
-
 
         } catch (Exception e) {
             System.out.println(e);
@@ -95,7 +102,9 @@ public class ScolariteService   {
 
     // update data from etudiants table by id
     @WebMethod(operationName = "updateEtudiant")
-    public boolean updateEtudiant(@WebParam(name = "id") int id, @WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "dateNaissance") String dateNaissance, @WebParam(name = "filiere") String filiere) {
+    public boolean updateEtudiant(@WebParam(name = "id") int id, @WebParam(name = "nom") String nom,
+            @WebParam(name = "prenom") String prenom, @WebParam(name = "dateNaissance") String dateNaissance,
+            @WebParam(name = "filiere") String filiere) {
 
         try {
             db.connect();
@@ -107,7 +116,5 @@ public class ScolariteService   {
             return false;
         }
     }
-
-    
 
 }

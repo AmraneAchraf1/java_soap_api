@@ -1,0 +1,7 @@
+com\iam\ServerWS.class
+com\iam\MySqlConction.class
+com\iam\Student.class
+com\iam\Filiere.class
+com\iam\CorsFilter.class
+com\iam\ScolariteService.class
+com\iam\Main.class
